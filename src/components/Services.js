@@ -1,23 +1,7 @@
 // src/components/Services.js
 import React from 'react';
-
-const services = [
-  {
-    title: "Custom Software Development",
-    description: "รับพัฒนาซอฟต์แวร์และแอปพลิเคชันตามความต้องการของธุรกิจ ด้วยเทคโนโลยีทันสมัย",
-    icon: "💻", // หรือจะใช้ SVG/Icon library ก็ได้
-  },
-  {
-    title: "Cloud Infrastructure",
-    description: "บริการวางระบบ Cloud Server ที่มีความปลอดภัยและยืดหยุ่นสูง (AWS, Google Cloud)",
-    icon: "☁️",
-  },
-  {
-    title: "Data Analytics & AI",
-    description: "วิเคราะห์ข้อมูลเชิงลึกและสร้างโมเดล AI เพื่อช่วยในการตัดสินใจทางธุรกิจ",
-    icon: "📊",
-  },
-];
+import Link from 'next/link';
+import { servicesData } from '@/data/services'; // 1. Import ข้อมูลมาใช้
 
 const Services = () => {
   return (
@@ -31,13 +15,25 @@ const Services = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <div key={index} className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition border border-gray-100">
+          {/* 2. Map ข้อมูลจาก servicesData */}
+          {servicesData.map((service, index) => (
+            <div key={index} className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition border border-gray-100 flex flex-col items-start h-full">
               <div className="text-4xl mb-4">{service.icon}</div>
               <h3 className="text-xl font-bold mb-3 text-gray-800">{service.title}</h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-600 leading-relaxed mb-6 flex-grow">
                 {service.description}
               </p>
+              
+              {/* 3. Link ไปยังหน้า Dynamic Route ตาม Slug */}
+              <Link 
+                href={`/services/${service.slug}`} 
+                className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-700 transition-colors"
+              >
+                Read More 
+                <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
             </div>
           ))}
         </div>

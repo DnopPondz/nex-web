@@ -31,7 +31,6 @@ export default function Home() {
           variants={staggerContainer}
           className="max-w-5xl mx-auto text-center space-y-8"
         >
-          
           {/* Badge */}
           <motion.div variants={fadeInUp} className="flex justify-center">
             <span className="px-4 py-1.5 rounded-full border border-gray-200 bg-white/60 backdrop-blur-md text-xs font-semibold text-blue-600 shadow-sm">
@@ -94,20 +93,26 @@ export default function Home() {
           {/* GRID LAYOUT */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            {/* Card 1: Custom Development (Large Box) */}
+            {/* Card 1: Custom Development (Large Box) - [UPDATED: Added Button] */}
             <motion.div 
               whileHover={{ y: -5 }}
               className="md:col-span-2 bg-white rounded-3xl p-10 border border-gray-100 shadow-sm hover:shadow-2xl hover:shadow-blue-100/50 transition-all duration-500 ease-out flex flex-col justify-between h-[300px] relative overflow-hidden group"
             >
               <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-full blur-3xl -mr-16 -mt-16 transition-all group-hover:scale-110" />
-              <div className="relative z-10">
-                <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center mb-6 text-white shadow-lg shadow-blue-600/20">
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+              <div className="relative z-10 flex flex-col h-full items-start justify-between">
+                <div>
+                  <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center mb-6 text-white shadow-lg shadow-blue-600/20">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Custom Web & App Development</h3>
+                  <p className="text-gray-500 max-w-sm">
+                    พัฒนาซอฟต์แวร์ด้วย Next.js, React และ Node.js ที่เน้น Performance, SEO และ Scalability รองรับผู้ใช้งานจำนวนมาก
+                  </p>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Custom Web & App Development</h3>
-                <p className="text-gray-500 max-w-sm">
-                  พัฒนาซอฟต์แวร์ด้วย Next.js, React และ Node.js ที่เน้น Performance, SEO และ Scalability รองรับผู้ใช้งานจำนวนมาก
-                </p>
+                {/* ปุ่ม Read More สำหรับ Card 1 */}
+                <Link href="/services/custom-development" className="mt-4 px-5 py-2 bg-gray-50 hover:bg-gray-100 text-gray-900 text-sm font-semibold rounded-full border border-gray-200 transition-colors">
+                  Read More
+                </Link>
               </div>
             </motion.div>
 
@@ -127,21 +132,25 @@ export default function Home() {
                <p className="text-xs text-gray-400 mt-2">Trusted by top clients</p>
             </motion.div>
 
-            {/* Card 3: Cloud Infrastructure (Tall Box) */}
+            {/* Card 3: Cloud Infrastructure (Tall Box) - [UPDATED: Added Button] */}
             <motion.div 
               whileHover={{ y: -5 }}
               className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-2xl hover:shadow-purple-100/50 transition-all duration-500 ease-out h-[300px] flex flex-col justify-between"
             >
               <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Cloud & DevOps</h3>
-                <p className="text-sm text-gray-500">วางระบบ Server (AWS/Google Cloud) พร้อม CI/CD Pipeline อัตโนมัติ</p>
+                <p className="text-sm text-gray-500 mb-4">วางระบบ Server (AWS/Google Cloud) พร้อม CI/CD Pipeline อัตโนมัติ</p>
+                {/* ปุ่ม Read More สำหรับ Card 3 */}
+                <Link href="/services/cloud-infrastructure" className="text-blue-600 text-sm font-semibold hover:underline flex items-center gap-1">
+                  Read More &rarr;
+                </Link>
               </div>
-              <div className="w-full bg-purple-50 rounded-xl h-32 flex items-center justify-center text-purple-500">
+              <div className="w-full bg-purple-50 rounded-xl h-32 flex items-center justify-center text-purple-500 mt-auto">
                  <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>
               </div>
             </motion.div>
 
-            {/* Card 4: AI & Data (Wide Box - Company Info Integration) */}
+            {/* Card 4: AI & Data (Wide Box) - [Already has button, tweaked slightly] */}
             <motion.div 
               whileHover={{ y: -5 }}
               className="md:col-span-2 bg-gray-900 text-white rounded-3xl p-10 border border-gray-800 shadow-md hover:shadow-2xl hover:shadow-gray-900/50 transition-all duration-500 ease-out flex flex-col md:flex-row items-center justify-between gap-8 h-auto md:h-[300px]"
@@ -154,8 +163,8 @@ export default function Home() {
                 <p className="text-gray-400">
                   บริการวิเคราะห์ข้อมูลธุรกิจ (BI) และสร้างโมเดล AI เพื่อช่วยทำนายแนวโน้มตลาด เพิ่มศักยภาพการแข่งขันให้ธุรกิจของคุณ
                 </p>
-                <Link href="/about" className="inline-block px-6 py-2 bg-white text-black rounded-full font-bold text-sm hover:bg-gray-200 transition-colors mt-2">
-                  Learn about our Tech
+                <Link href="/services/ai-data" className="inline-block px-6 py-2 bg-white text-black rounded-full font-bold text-sm hover:bg-gray-200 transition-colors mt-2">
+                  Read More
                 </Link>
               </div>
               <div className="w-full md:w-1/3 bg-gray-800/50 rounded-2xl h-40 border border-gray-700 flex flex-col items-center justify-center p-4">
