@@ -1,3 +1,4 @@
+// src/components/Navbar.js
 'use client';
 
 import Link from 'next/link';
@@ -21,16 +22,24 @@ const Navbar = () => {
       <motion.nav
         layout
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className="flex items-center p-2 bg-gray-400/30 backdrop-blur-xl border border-white/20 shadow-lg rounded-full overflow-hidden"
+        className="
+          flex items-center p-2 
+          /* 1. เปลี่ยนพื้นหลังเป็นกระจกสีขาวขุ่น (White Glass) */
+          bg-white/60 backdrop-blur-xl 
+          /* 2. เพิ่มขอบสีเทาจางๆ และเงา */
+          border border-white/60 shadow-lg shadow-black/5
+          rounded-full overflow-hidden
+        "
       >
         
-        {/* Logo Section - จุดที่แก้ไข */}
-        <motion.button  // เปลี่ยนจาก div เป็น button
+        {/* Logo Section */}
+        <motion.button
           layout 
           onClick={() => setIsExpanded(!isExpanded)}
           className={`cursor-pointer select-none flex items-center h-full outline-none ${isExpanded ? 'pl-4 pr-1' : 'px-6'}`}
         >
-          <span className="text-lg font-bold text-white whitespace-nowrap">
+          {/* 3. เปลี่ยนสี Logo เป็นสีดำเข้ม (Gray-900) */}
+          <span className="text-lg font-bold text-gray-900 whitespace-nowrap">
             MyBrand
           </span>
         </motion.button>
@@ -53,13 +62,18 @@ const Navbar = () => {
                     href={item.path}
                     className={`
                       relative px-5 py-2 rounded-full text-sm font-medium transition-colors duration-200
-                      ${isActive ? 'text-white font-semibold' : 'text-gray-300 hover:text-gray-500'}
+                      /* 4. Logic สีตัวหนังสือ:
+                          - Active: สีดำ (Gray-900) + ตัวหนา
+                          - Inactive: สีเทากลาง (Gray-500) -> Hover เป็นสีเทาเข้ม (Gray-700)
+                      */
+                      ${isActive ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-900'}
                     `}
                   >
                     {isActive && (
                       <motion.div
                         layoutId="active-pill"
-                        className="absolute inset-0 bg-white/30 backdrop-blur-md border border-white/20 shadow-sm rounded-full"
+                        /* 5. พื้นหลังของปุ่ม Active เป็นสีขาวชัดเจน + เงา (ให้ดูนูนขึ้นมา) */
+                        className="absolute inset-0 bg-white shadow-sm rounded-full border border-gray-100"
                         transition={{ type: "spring", stiffness: 300, damping: 20 }}
                       />
                     )}

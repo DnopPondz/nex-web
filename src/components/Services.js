@@ -1,11 +1,12 @@
 // src/components/Services.js
 import React from 'react';
 import Link from 'next/link';
-import { servicesData } from '@/data/services'; // 1. Import ข้อมูลมาใช้
+import { servicesData } from '@/data/services';
 
 const Services = () => {
   return (
-    <section className="py-20 bg-gray-50">
+    // Change: Removed solid background
+    <section className="py-20">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Solutions & Services</h2>
@@ -15,19 +16,21 @@ const Services = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {/* 2. Map ข้อมูลจาก servicesData */}
           {servicesData.map((service, index) => (
-            <div key={index} className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition border border-gray-100 flex flex-col items-start h-full">
+            <div 
+              key={index} 
+              // Change: Glassmorphism Card Style
+              className="bg-white/40 backdrop-blur-lg p-8 rounded-xl shadow-sm hover:shadow-xl hover:shadow-purple-100/50 transition-all border border-white/50 flex flex-col items-start h-full"
+            >
               <div className="text-4xl mb-4">{service.icon}</div>
-              <h3 className="text-xl font-bold mb-3 text-gray-800">{service.title}</h3>
-              <p className="text-gray-600 leading-relaxed mb-6 flex-grow">
+              <h3 className="text-xl font-bold mb-3 text-gray-900">{service.title}</h3>
+              <p className="text-gray-700 leading-relaxed mb-6 flex-grow">
                 {service.description}
               </p>
               
-              {/* 3. Link ไปยังหน้า Dynamic Route ตาม Slug */}
               <Link 
                 href={`/services/${service.slug}`} 
-                className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-700 transition-colors"
+                className="inline-flex items-center text-purple-600 font-bold hover:text-purple-800 transition-colors"
               >
                 Read More 
                 <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">

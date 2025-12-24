@@ -1,3 +1,4 @@
+// src/app/layout.js
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -18,9 +19,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${font.className} bg-gray-50 min-h-screen flex flex-col relative`}>
+      {/* Change 1: Removed bg-gray-50 and added text-gray-800 for better default contrast */}
+      <body className={`${font.className} min-h-screen flex flex-col relative text-gray-800`}>
         <ScrollProgress />
-        <Background /> {/* ใส่ตรงนี้ทีเดียว ทุกหน้าจะมีพื้นหลังเหมือนกันหมด */}
+        <Background />
         
         <Navbar />
         
