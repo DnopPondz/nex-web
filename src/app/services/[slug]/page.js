@@ -1,34 +1,59 @@
-import React from 'react';
-import { servicesData } from '@/data/services';
-import { notFound } from 'next/navigation';
+// src/app/services/[slug]/page.js
+'use client'; // 1. Convert to Client Component
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
-// ฟังก์ชันสำหรับสร้าง Title ของหน้าเว็บ (Metadata)
-export async function generateMetadata({ params }) {
-  const service = servicesData.find((s) => s.slug === params.slug);
-  if (!service) return { title: 'Service Not Found' };
-  
-  return {
-    title: `${service.title} | MyBrand Services`,
-    description: service.description,
-  };
-}
-
-// หน้าแสดงผลหลัก
 export default function ServiceDetailPage({ params }) {
-  // 1. ค้นหา service ที่ตรงกับ slug
-  const service = servicesData.find((s) => s.slug === params.slug);
+  const [service, setService] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  // 2. ถ้าไม่เจอ ให้ไปหน้า 404
-  if (!service) {
-    notFound();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch all services and find the one matching the slug
+        // (Alternatively, you could update your API to support fetching by slug directly)
+        const res = await fetch('/api/services'); 
+        if (!res.ok) throw new Error('Failed to fetch');
+        
+        const data = await res.json();
+        const foundService = data.find((s) => s.slug === params.slug);
+
+        if (foundService) {
+          setService(foundService);
+        } else {
+          setError(true); // Service not found
+        }
+      } catch (err) {
+        console.error(err);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [params.slug]);
+
+  if (loading) return <div className="min-h-screen pt-24 text-center">Loading...</div>;
+  
+  // Handle 404 manually for Client Component
+  if (error || !service) {
+    return (
+        <div className="min-h-screen pt-24 text-center">
+            <h1 className="text-2xl font-bold text-gray-800">Service Not Found</h1>
+            <Link href="/services" className="text-blue-600 hover:underline mt-4 inline-block">Back to Services</Link>
+        </div>
+    );
   }
 
   return (
     <div className="min-h-screen bg-white pt-24 pb-20">
       <div className="container mx-auto px-6 max-w-4xl">
         
-        {/* Breadcrumb / Back Button */}
+        {/* Breadcrumb */}
         <div className="mb-8">
           <Link href="/services" className="text-sm text-gray-500 hover:text-blue-600 flex items-center gap-1 transition-colors">
             ← Back to Services
@@ -48,7 +73,7 @@ export default function ServiceDetailPage({ params }) {
 
         {/* Content Section */}
         <div className="prose prose-lg max-w-none text-gray-700">
-           {/* ใช้ dangerouslySetInnerHTML เพื่อแสดง HTML จากข้อมูล content */}
+           {/* Render HTML content safely */}
            <div dangerouslySetInnerHTML={{ __html: service.content }} />
         </div>
 
