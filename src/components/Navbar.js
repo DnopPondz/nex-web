@@ -24,18 +24,15 @@ const Navbar = () => {
       >
         
         {/* Logo Section - จุดที่แก้ไข */}
-        <motion.div 
+        <motion.button  // เปลี่ยนจาก div เป็น button
           layout 
           onClick={() => setIsExpanded(!isExpanded)}
-          // แก้ตรงนี้: ใช้เงื่อนไข check isExpanded
-          // ถ้าเปิด (isExpanded): ใช้ 'pl-4 pr-1' เหมือนเดิม
-          // ถ้าปิด (!isExpanded): ใช้ 'px-6' (ซ้ายขวาเท่ากัน) เพื่อให้ Logo อยู่ตรงกลางเป๊ะๆ
-          className={`cursor-pointer select-none flex items-center h-full ${isExpanded ? 'pl-4 pr-1' : 'px-6'}`}
+          className={`cursor-pointer select-none flex items-center h-full outline-none ${isExpanded ? 'pl-4 pr-1' : 'px-6'}`}
         >
           <span className="text-lg font-bold text-white whitespace-nowrap">
             MyBrand
           </span>
-        </motion.div>
+        </motion.button>
 
         {/* Links Section */}
         <AnimatePresence mode='popLayout'>
