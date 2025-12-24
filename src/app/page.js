@@ -1,6 +1,7 @@
 // src/app/page.js
 'use client';
 
+import { useState, useEffect } from 'react'; // 1. เพิ่ม import useState และ useEffect
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -20,6 +21,22 @@ const staggerContainer = {
 };
 
 export default function Home() {
+  // 2. เพิ่ม State และ Logic ดึงข้อมูลข่าว
+  const [latestNews, setLatestNews] = useState([]);
+
+  useEffect(() => {
+    // ดึงข้อมูลจาก API ที่เราสร้างไว้
+    fetch('/api/news')
+      .then((res) => res.json())
+      .then((data) => {
+        // ตรวจสอบว่าเป็น Array และตัดมาแสดงแค่ 4 ข่าวล่าสุด
+        if (Array.isArray(data)) {
+          setLatestNews(data.slice(0, 4));
+        }
+      })
+      .catch((err) => console.error("Failed to fetch news:", err));
+  }, []);
+
   return (
     // Change 1: Removed 'bg-white' so the Background.js blobs show through
     <div className="flex flex-col min-h-screen overflow-hidden">
@@ -179,7 +196,80 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- 3. Company Information --- */}
+      {/* --- 3. Latest News Section (เพิ่มใหม่) --- */}
+      <section className="py-20 px-6 bg-white/30 backdrop-blur-sm border-t border-white/20">
+        <div className="max-w-7xl mx-auto">
+          {/* Header & Button */}
+          <div className="flex flex-col sm:flex-row justify-between items-end mb-12 gap-4">
+            <motion.div 
+               initial={{ opacity: 0, x: -20 }}
+               whileInView={{ opacity: 1, x: 0 }}
+               viewport={{ once: true }}
+            >
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">Latest News & Update</h2>
+              <p className="text-gray-600">ติดตามข่าวสารและกิจกรรมล่าสุดจากทางเรา</p>
+            </motion.div>
+            
+            <motion.div
+               initial={{ opacity: 0, x: 20 }}
+               whileInView={{ opacity: 1, x: 0 }}
+               viewport={{ once: true }}
+            >
+               <Link 
+                  href="/news" 
+                  className="px-6 py-3 rounded-full border border-purple-500 text-purple-600 font-bold hover:bg-purple-600 hover:text-white transition-all duration-300 flex items-center gap-2"
+               >
+                 View All News &rarr;
+               </Link>
+            </motion.div>
+          </div>
+
+          {/* Grid Cards (4 columns on Large screens) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {latestNews.length === 0 ? (
+              <div className="col-span-full text-center py-10 bg-white/40 rounded-3xl border border-dashed border-gray-300">
+                 <p className="text-gray-500">ยังไม่มีข่าวสารล่าสุดในขณะนี้</p>
+              </div>
+            ) : (
+              latestNews.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ y: -5 }}
+                  className="bg-white/50 backdrop-blur-md border border-white/60 p-6 rounded-2xl shadow-sm hover:shadow-lg transition-all flex flex-col h-full group"
+                >
+                  <div className="flex justify-between items-start mb-3">
+                    <span className="text-[10px] font-bold text-purple-600 bg-purple-100 px-2 py-1 rounded-full uppercase tracking-wider">
+                      {item.category}
+                    </span>
+                    <span className="text-xs text-gray-400">{item.date}</span>
+                  </div>
+                  
+                  <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-purple-600 transition-colors">
+                    {item.title}
+                  </h3>
+                  
+                  <p className="text-gray-600 text-sm line-clamp-3 mb-4 flex-grow font-light">
+                    {item.content}
+                  </p>
+                  
+                  <Link 
+                    href={`/news/${item.id}`} 
+                    className="text-sm font-semibold text-gray-900 hover:text-purple-600 flex items-center gap-1 mt-auto"
+                  >
+                    Read more <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                  </Link>
+                </motion.div>
+              ))
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* --- 4. Company Information --- */}
       {/* Change 5: Added semi-transparent white background to section for readability without blocking blobs completely */}
       <section className="py-20 px-6 border-t border-white/20 bg-white/20 backdrop-blur-sm">
          <div className="max-w-4xl mx-auto text-center">
@@ -209,7 +299,7 @@ export default function Home() {
          </div>
       </section>
 
-      {/* --- 4. Testimonials --- */}
+      {/* --- 5. Testimonials --- */}
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <motion.div 
