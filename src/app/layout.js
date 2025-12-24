@@ -1,6 +1,9 @@
 // src/app/layout.js
+// src/app/layout.js
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
-import dynamic from "next/dynamic"; // 1. เพิ่ม import dynamic
+import dynamic from "next/dynamic";
+import { Analytics } from "@vercel/analytics/react";       // <-- เพิ่ม
+import { SpeedInsights } from "@vercel/speed-insights/next"; // <-- เพิ่ม
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Background from "@/components/Background";
@@ -32,7 +35,6 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      {/* Change 1: Removed bg-gray-50 and added text-gray-800 for better default contrast */}
       <body className={`${font.className} min-h-screen flex flex-col relative text-gray-800`}>
         <ScrollProgress />
         <Background />
@@ -45,6 +47,9 @@ export default function RootLayout({ children }) {
         
         <Footer />
         
+        {/* ใส่ Component วัดผลไว้ท้ายสุด */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
