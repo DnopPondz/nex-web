@@ -19,17 +19,13 @@ const Navbar = () => {
 
   return (
     <div className="fixed top-5 left-0 right-0 z-50 flex justify-center w-full">
+      {/* 1. เปลี่ยนพื้นหลังเป็นกระจกสีขาวขุ่น (White Glass) 
+        2. เพิ่มขอบสีเทาจางๆ และเงา
+      */}
       <motion.nav
         layout
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className="
-          flex items-center p-2 
-          /* 1. เปลี่ยนพื้นหลังเป็นกระจกสีขาวขุ่น (White Glass) */
-          bg-white/60 backdrop-blur-xl 
-          /* 2. เพิ่มขอบสีเทาจางๆ และเงา */
-          border border-white/60 shadow-lg shadow-black/5
-          rounded-full overflow-hidden
-        "
+        className="flex items-center p-2 bg-white/60 backdrop-blur-xl border border-white/60 shadow-lg shadow-black/5 rounded-full overflow-hidden"
       >
         
         {/* Logo Section */}
@@ -60,12 +56,12 @@ const Navbar = () => {
                   <Link
                     key={item.path}
                     href={item.path}
+                    /* 4. Logic สีตัวหนังสือ:
+                      - Active: สีดำ (Gray-900) + ตัวหนา
+                      - Inactive: สีเทากลาง (Gray-500) -> Hover เป็นสีเทาเข้ม (Gray-700)
+                    */
                     className={`
                       relative px-5 py-2 rounded-full text-sm font-medium transition-colors duration-200
-                      /* 4. Logic สีตัวหนังสือ:
-                          - Active: สีดำ (Gray-900) + ตัวหนา
-                          - Inactive: สีเทากลาง (Gray-500) -> Hover เป็นสีเทาเข้ม (Gray-700)
-                      */
                       ${isActive ? 'text-gray-900 font-bold' : 'text-gray-500 hover:text-gray-900'}
                     `}
                   >
